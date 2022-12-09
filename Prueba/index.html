@@ -1,0 +1,218 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="cache-control" content="max-age=1296000" />
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<title>Venezolano de Crédito Backoffice</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+		<link rel="stylesheet" href="./style.css"  type="text/css" media="screen, projection" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+ 		<!-- <script language="javascript" src="../js/jquery/jquery.js"></script> -->
+		<script type="text/javascript">
+		$(document).ready(function() {
+		   $("input:text:visible:first").focus();
+			$("#vobForm").submit(function(e){
+				e.preventDefault();
+				enviar();
+			});
+			var loc = $("#locale").val();
+			if(loc != ""){
+				cambiaLocale(loc);
+			}
+		});
+		
+		// Función para abrir la evaluación de servicio
+		function abrirManual() {
+			window.open("http://www.venezolano.com/encuesta/vob-edi/index.static.php", "Evaluación del Servicio VOB/EDI", "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+		};
+		
+		function recuperaClave() {
+			parent.bloquear();
+			$("#vobForm").attr("action","recuperaClave.do");
+			$('#vobForm').unbind("submit");
+			$("#vobForm").submit();
+		};
+		
+		function obtenerdatosNav() {
+			$("#transaccion").val("001");
+			$("#sistema_operativo").val(BrowserDetect.OS);
+			$("#browser").val(BrowserDetect.browser + " " + BrowserDetect.version);
+		};
+		</script>
+
+		<style>			
+		.header-start {
+            box-sizing: inherit; /* Override de bootstrap */
+        }
+                                                
+        .login-entry input[type="text"] {
+        	margin-top: 1.5rem;
+        	margin-bottom: 1rem;
+        }
+        
+        .login-entry input[type="password"] {
+        	margin-bottom: 1.5rem;
+        }
+        
+        .button {
+        	padding: 2px 0; /* Override de bootstrap */
+        }
+        
+        /* BOOTSTRAP */
+        .floating-login {
+            color: #1b4867;
+            border: 1px #1b4867 solid;
+            border-radius: 0.25em;
+        }
+        
+        label {
+            color: #1b4867;
+            opacity: 0.8;
+        }
+
+        .form-control:focus {
+            border: 1px #1b4867 solid;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        
+        .form-floating label {
+            color: #1b4867;
+            opacity: 0.8;
+        }
+        
+        .login-options-2 {
+       		margin-top: 2rem;
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            align-items: flex-start;
+            color: #6290a0;
+        }
+
+        .login-option-2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .login-option-2 {
+            inline-size: 5em;
+            gap: 0.5em;
+            overflow: auto;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .login-option-2:hover {
+        	color: #5f7f8a;
+        }
+
+        .login-option-2 > a > i {
+            font-size: 1.5rem;
+            margin-bottom: 0.25em;
+        }
+		</style>
+	</head>
+
+	<body> 
+		<div class="login-container">		
+		    <div class="full filled">	    	 
+				<!-- HEADER -->
+				<header class="header-start">
+                	<img alt="BVC" src="./bannerBvcWhite.png">
+            	</header>
+            	
+			    <!-- INICIO DE SESIÓN -->
+			    <div class="login-inputs">			    	
+			    	<s:form action="/vob/login.do" id="vobForm" >	    
+			    	<s:hidden name="transaccion" id="transaccion" value="000"></s:hidden>	
+			    	<s:hidden name="request_locale" id="locale" ></s:hidden>
+			    	<s:hidden name="sistema_operativo" id="sistema_operativo" ></s:hidden>
+			    	<s:hidden name="browser" id="browser" ></s:hidden>
+				   	    <div class="login">
+				   	    	<h1>Bienvenido a Venecredit Office Banking</h1>
+				   	    	<!-- INGRESO -->
+					   		<div class="login-entry">
+                                <p>Usuario</p>	
+                                <p>Clave</p>	   		 	
+						   		<input type="submit" value="Iniciar sesión" class="button"  onclick="obtenerdatosNav();" id="btnAceptar"/>  
+				   		 	</div>
+				   		 					   		 	
+			              	<!-- OPCIONES ADICIONALES -->
+							<div class="login-options-2">
+						        <div class="login-option-2">
+						            <a data-bs-toggle="modal" data-bs-target="#formatosModal">
+						            	<i class="bi bi-file-earmark-text-fill"></i>
+						            	<a data-bs-toggle="modal" data-bs-target="#formatosModal">Formatos</a>
+						            </a>            			
+						        </div>
+						        <div class="login-option-2">
+						            <a onclick="recuperaClave();" >
+							            <i class="bi bi-key-fill"></i>
+							            <a onclick="recuperaClave();">Recuperar Clave</a>
+						            </a>            			
+						        </div>
+						    </div>          
+						</div>							
+					</s:form>
+				</div>
+					
+				<!-- MODAL DE FORMATOS -->
+				<div class="modal fade" id="formatosModal" tabindex="-1" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered">
+				    <div class="modal-content">
+				      <div class="modal-header border-bottom-0">
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				      	<i class="bi bi-info-circle"></i>
+			   			<a onclick="descargarArchivo('carta_de_autorizacion_vob.docx')">
+			   				Formato de Incorporación Persona Jurídica
+			   				<i class="bi bi-download"></i>
+			   			</a>
+			   			<a onclick="descargarArchivo('carta_de_desincorporacion_vob.doc')">
+			   				Formato de Desincorporación Persona Jurídica
+			   				<i class="bi bi-download"></i>
+			   			</a>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+				<!-- MODAL DE INGRESO DE USUARIO Y CLAVE -->
+				<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered">
+				    <div class="modal-content">
+				      <div class="modal-header border-bottom-0">
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				      	<i class="bi bi-exclamation-circle"></i>
+			   			<p>Por favor, introduzca un usuario y una clave.</p>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+				<!-- LEYENDA  -->
+				<div class="recommendation">
+					<p>Recomendamos el uso de los siguientes navegadores: Microsoft Edge, Firefox 58.0.0 o superior, Chrome. Resolución recomendada 1280 x 1024 o superior.</p>
+				</div>
+				   		
+				<!-- PIE DE PÁGINA -->
+			  	<div style="background-color: #F6F6F6; text-align: center;">
+					<p>Hola</p>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+		<script>
+		/*
+        // Script que se utiliza para evitar que el viewport del height cambie en los dispositivos móviles
+		let viewport = document.querySelector("meta[name=viewport]");
+		viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight);
+        */
+		</script>
+	</body>
+</html>
